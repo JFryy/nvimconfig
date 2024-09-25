@@ -1,7 +1,3 @@
--- note to self: mason installs language servers, so use Mason if you encounter a language not yet supported
--- settings
--- core lazy setup
---TODO: https://github.com/folke/lazy.nvim#-structuring-your-plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -28,17 +24,15 @@ require("lazy").setup({
                 sync_install = true,
                 highlight = { enable = true },
                 indent = { enable = true },
-
+                context_commentstring = { enable = true },
             })
         end
     },
-    -- telescope for fuzzy finding by name and ripgrep/livegrep
     {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.4',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
-    -- neotree for the file viewer
+    -- neotree
     {
         "nvim-neo-tree/neo-tree.nvim",
         branch = "v3.x",
@@ -69,12 +63,6 @@ require("lazy").setup({
     {
         'mfussenegger/nvim-lint',
     },
-    {
-        "rshkarin/mason-nvim-lint",
-    },
-
-
-    -- Autocompletion grabbed from lsp-zero
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
@@ -138,7 +126,6 @@ require("lazy").setup({
                     'gopls',
                     'pyright',
                     'rust_analyzer',
-                    'tsserver',
                     'vimls',
                 },
                 handlers = {
@@ -162,35 +149,6 @@ require("lazy").setup({
             end
         },
     },
-    -- gh copilot
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-        config = function()
-            require("copilot").setup({
-                suggestion = {
-                    auto_trigger = true,
-                    keymap = {
-                        accept = "<C-e>",
-                        accept_word = false,
-                        accept_line = false,
-                        next = "<M-]>",
-                        prev = "<M-[>",
-                        dismiss = "<C-]>",
-                    },
-                },
-                filetypes = {
-                    yaml = true,
-                    markdown = true,
-                    help = false,
-                    gitcommit = false,
-                    gitrebase = false,
-                    hgcommit = false,
-                }
-            })
-        end,
-    },
     -- git line diff
     {
         "lewis6991/gitsigns.nvim",
@@ -199,18 +157,18 @@ require("lazy").setup({
             require("gitsigns").setup()
         end,
     },
-    -- better terminal
+    -- better terminal?
     {
         'akinsho/toggleterm.nvim',
         version = "*",
         opts = { persist_size = true },
-    },
-    {
-        'MeanderingProgrammer/markdown.nvim',
-        name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
-        dependencies = { 'nvim-treesitter/nvim-treesitter' },
-        config = function()
-            require('render-markdown').setup({})
-        end,
     }
+--    {
+--        dir = "~/.config/nvim/lua/localpilot/",
+--        config = function()
+--            require("localpilot").setup({
+--                -- Add any setup options or configuration here
+--            })
+--        end
+--    }
 })
