@@ -9,49 +9,82 @@ if not vim.loop.fs_stat(lazypath) then
         lazypath,
     })
 end
+
 vim.opt.rtp:prepend(lazypath)
 -- lazy plugins
 require("lazy").setup({
-    -- treesitter for syntax highlighting
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         config = function()
             local configs = require("nvim-treesitter.configs")
-
             configs.setup({
-                ensure_installed = {}, -- language list
+                ensure_installed = {
+                    "go",
+                    "bash",
+                    "python",
+                    "rust",
+                    "lua",
+                    "helm",
+                    "javascript",
+                    "typescript",
+                    "terraform",
+                },
                 sync_install = true,
-                highlight = { enable = true },
                 indent = { enable = true },
-                context_commentstring = { enable = true },
+                highlight = { enable = true, additional_vim_regex_highlighting = true }, -- enable highlighting with additional regex options
+                context_commentstring = { enable = true, enable_autocmd = true },        -- enable context comment string with autocmd option
+                matchup = { enable = true },                                             -- enable the matchup plugin for better parentheses matching
+                textobjects = {
+                    enable = true,
+                    lookahead = true,
+                    select = {
+                        enable = true,
+                        keymaps = {
+                            ["af"] = "@function.outer", -- select outer function
+                            ["if"] = "@function.inner", -- select inner function
+                            ["ab"] = "@block.outer",    -- select outer block
+                            ["ib"] = "@block.inner",    -- select inner block
+                        },
+                    },
+                }
             })
         end
     },
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' }
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        init = function()
+            -- Set up Telescope with custom options
+            require('telescope').setup {
+                defaults = {
+                    file_ignore_patterns = { '%.git/', '%.svn/', 'venv/', '%.venv/' }
+                },
+                pickers = {
+                    find_files = {
+                        hidden = false, -- Don't search for hidden files (dotfiles)
+                    },
+                },
+            }
+        end,
     },
     -- neotree
     {
         "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+            "nvim-tree/nvim-web-devicons",
             "MunifTanjim/nui.nvim",
         }
     },
     -- lsp-zero itself
     {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
         lazy = true,
         config = false,
         init = function()
-            -- Disable automatic setup, we are doing it manually
-            vim.g.lsp_zero_extend_cmp = 0
-            vim.g.lsp_zero_extend_lspconfig = 0
+            vim.g.lsp_zero_extend_cmp = 1
+            vim.g.lsp_zero_extend_lspconfig = 1
         end,
     },
     -- mason config recommended by lsp-zero
@@ -70,11 +103,8 @@ require("lazy").setup({
             { 'L3MON4D3/LuaSnip' },
         },
         config = function()
-            -- Here is where you configure the autocompletion settings.
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_cmp()
-
-            -- And you can configure cmp even more, if you want to.
             local cmp = require('cmp')
             local cmp_action = lsp_zero.cmp_action()
 
@@ -82,16 +112,19 @@ require("lazy").setup({
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-j>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-k>'] = cmp.mapping.scroll_docs(4),
                     ['<C-f>'] = cmp_action.luasnip_jump_forward(),
                     ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-                    -- configure mapping for tab to accept the snippet
                     ['<tab>'] = cmp.mapping.confirm({
+                        -- what options do I have for this?
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true,
                     }),
-                })
+                }),
+                experimental = {
+                    ghost_text = true
+                }
             })
         end
     },
@@ -108,13 +141,12 @@ require("lazy").setup({
         config = function()
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_lspconfig()
-
             lsp_zero.on_attach(function(client, bufnr)
                 lsp_zero.default_keymaps({ buffer = bufnr })
                 local opts = { buffer = bufnr }
 
                 vim.keymap.set({ 'n', 'x' }, 'gq', function()
-                    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+                    vim.lsp.buf.format({ async = true, timeout_ms = 5000 })
                 end, opts)
                 lsp_zero.default_keymaps({ buffer = bufnr })
             end)
@@ -122,16 +154,12 @@ require("lazy").setup({
             require('mason-lspconfig').setup({
                 ensure_installed = {
                     'bashls',
-                    'dockerls',
                     'gopls',
                     'pyright',
-                    'rust_analyzer',
-                    'vimls',
                 },
                 handlers = {
                     lsp_zero.default_setup,
                     lua_ls = function()
-                        -- (Optional) Configure lua language server for neovim
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         require('lspconfig').lua_ls.setup(lua_opts)
                     end,
@@ -139,17 +167,11 @@ require("lazy").setup({
             })
         end
     },
-    -- colorscheme
     {
-        {
-            'rose-pine/neovim',
-            name = 'rose-pine',
-            config = function()
-                vim.cmd('colorscheme rose-pine')
-            end
-        },
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
     },
-    -- git line diff
     {
         "lewis6991/gitsigns.nvim",
         event = "BufRead",
@@ -157,18 +179,47 @@ require("lazy").setup({
             require("gitsigns").setup()
         end,
     },
-    -- better terminal?
     {
         'akinsho/toggleterm.nvim',
         version = "*",
         opts = { persist_size = true },
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {},
+        dependencies = { 'nvim-treesitter/nvim-treesitter' }
+    },
+    {
+        dir = "~/.config/nvim/lua/localpilot/",
+        config = function()
+            require("localpilot").setup({
+                -- Add any setup options or configuration here
+            })
+        end
+    },
+    {
+        "epwalsh/obsidian.nvim",
+        version = "*", -- recommended, use latest release instead of latest commit
+        lazy = true,
+        event = {
+            -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+            -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+            -- refer to `:h file-pattern` for more examples
+            "BufReadPre " .. vim.fn.expand "~" .. "/md_vault/*.md",
+            "BufNewFile " .. vim.fn.expand "~" .. "/md_vault/*.md",
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+
+        },
+        opts = {
+            workspaces = {
+                {
+                    name = "personal",
+                    path = "~/md_vault/",
+                },
+            },
+
+        },
     }
---    {
---        dir = "~/.config/nvim/lua/localpilot/",
---        config = function()
---            require("localpilot").setup({
---                -- Add any setup options or configuration here
---            })
---        end
---    }
 })

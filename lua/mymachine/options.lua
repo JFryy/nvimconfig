@@ -17,4 +17,4 @@ vim.opt.undodir = vim.fn.stdpath('data') .. '/undo'
 vim.opt.undolevels = 1000
 vim.opt.undoreload = 10000
 vim.opt.clipboard = 'unnamedplus'
-
+vim.cmd("colorscheme catppuccin-mocha")
