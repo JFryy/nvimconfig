@@ -168,64 +168,22 @@ require("lazy").setup({
         end
     },
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        priority = 1000,
-    },
-    {
         "lewis6991/gitsigns.nvim",
         event = "BufRead",
         config = function()
             require("gitsigns").setup()
         end,
     },
-    {
-        'akinsho/toggleterm.nvim',
-        version = "*",
-        opts = { persist_size = true },
-    },
+    { "EdenEast/nightfox.nvim" },
     {
         'MeanderingProgrammer/render-markdown.nvim',
         opts = {},
         dependencies = { 'nvim-treesitter/nvim-treesitter' }
     },
-    --    {
-    --        dir = "~/.config/nvim/lua/codeposse/",
-    --        config = function()
-    --            require("codeposse").setup({
-    --                -- Add any setup options or configuration here
-    --            })
-    --        end
-    --    },
     {
         'altermo/ultimate-autopair.nvim',
         event = { 'InsertEnter', 'CmdlineEnter' },
         branch = 'v0.6', --recommended as each new version will have breaking changes
         opts = {}
-    },
-    {
-        "epwalsh/obsidian.nvim",
-        version = "*", -- recommended, use latest release instead of latest commit
-        lazy = true,
-        event = {
-            -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
-            -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
-            -- refer to `:h file-pattern` for more examples
-            "BufReadPre " .. vim.fn.expand "~" .. "/md_vault/*.md",
-            "BufNewFile " .. vim.fn.expand "~" .. "/md_vault/*.md",
-        },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-
-        },
-        opts = {
-            workspaces = {
-                {
-                    name = "personal",
-                    path = "~/md_vault/",
-                },
-            },
-
-        },
     }
 })
