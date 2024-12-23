@@ -59,7 +59,7 @@ local function toggle_centered_terminal()
         if vim.api.nvim_buf_get_option(term_buf, 'buftype') ~= 'terminal' then
             vim.fn.termopen(vim.o.shell)
         end
-        vim.api.nvim_buf_set_keymap(term_buf, 't', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+        vim.api.nvim_buf_set_keymap(term_buf, 't', '<leader>tt', [[<C-\><C-n>]], { noremap = true, silent = true })
         vim.api.nvim_buf_set_keymap(term_buf, 't', '<Esc><Esc>', [[<Cmd>bwipeout!<CR>]],
             { noremap = true, silent = true })
         vim.cmd('startinsert')
