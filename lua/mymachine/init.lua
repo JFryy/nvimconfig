@@ -5,13 +5,13 @@ if not vim.loop.fs_stat(lazypath) then
         "clone",
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
+        "--branch=stable",
         lazypath,
     })
 end
 
 vim.opt.rtp:prepend(lazypath)
--- lazy plugins
+
 require("lazy").setup({
     {
         "nvim-treesitter/nvim-treesitter",
@@ -68,15 +68,6 @@ require("lazy").setup({
             }
         end,
     },
-    -- neotree
-    {
-        "nvim-neo-tree/neo-tree.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons",
-            "MunifTanjim/nui.nvim",
-        }
-    },
     -- lsp-zero itself
     {
         'VonHeikemen/lsp-zero.nvim',
@@ -88,14 +79,8 @@ require("lazy").setup({
         end,
     },
     -- mason config recommended by lsp-zero
-    {
-        'williamboman/mason.nvim',
-        lazy = false,
-        config = true,
-    },
-    {
-        'mfussenegger/nvim-lint',
-    },
+    { 'williamboman/mason.nvim', lazy = false, config = true, },
+    { 'mfussenegger/nvim-lint' },
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
@@ -128,7 +113,6 @@ require("lazy").setup({
             })
         end
     },
-
     -- LSP Configuration grabbed from lsp-zero
     {
         'neovim/nvim-lspconfig',
@@ -167,6 +151,11 @@ require("lazy").setup({
             })
         end
     },
+    -- neotree
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim", }
+    },
     {
         "lewis6991/gitsigns.nvim",
         event = "BufRead",
@@ -174,16 +163,7 @@ require("lazy").setup({
             require("gitsigns").setup()
         end,
     },
-    { "EdenEast/nightfox.nvim" },
-    {
-        'MeanderingProgrammer/render-markdown.nvim',
-        opts = {},
-        dependencies = { 'nvim-treesitter/nvim-treesitter' }
-    },
-    {
-        'altermo/ultimate-autopair.nvim',
-        event = { 'InsertEnter', 'CmdlineEnter' },
-        branch = 'v0.6', --recommended as each new version will have breaking changes
-        opts = {}
-    }
+    { 'MeanderingProgrammer/render-markdown.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
+    { "altermo/ultimate-autopair.nvim",            event = { 'InsertEnter', 'CmdlineEnter' }, },
+    { "catppuccin/nvim",                           name = "catppuccin",                                 priority = 1000 }
 })
