@@ -139,7 +139,6 @@ require("lazy").setup({
                 ensure_installed = {
                     'bashls',
                     'gopls',
-                    'pyright',
                 },
                 handlers = {
                     lsp_zero.default_setup,
