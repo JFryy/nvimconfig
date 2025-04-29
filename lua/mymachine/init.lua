@@ -173,9 +173,9 @@ require("lazy").setup({
             provider = "openai",
             openai = {
                 endpoint = "https://api.openai.com/v1",
-                model = "gpt-4o-mini",
+                model = "gpt-4o",
                 timeout = 30000,
-                temperature = .1,
+                temperature = 0,
                 max_completion_tokens = 8192,
                 --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
             },
