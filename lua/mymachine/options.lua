@@ -1,7 +1,3 @@
--- helpful things I forget sometimes:
--- gd = go to definition
--- C-o = go back
--- C-i = go forward
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true

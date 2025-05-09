@@ -1,0 +1,26 @@
+return function()
+    local lsp_zero = require('lsp-zero')
+    lsp_zero.extend_lspconfig()
+    lsp_zero.on_attach(function(client, bufnr)
+        lsp_zero.default_keymaps({ buffer = bufnr })
+        local opts = { buffer = bufnr }
+        vim.keymap.set({ 'n', 'x' }, 'gq', function() -- autoformat
+            vim.lsp.buf.format({ async = true, timeout_ms = 5000 })
+        end, opts)
+        lsp_zero.default_keymaps({ buffer = bufnr })
+    end)
+
+    require('mason-lspconfig').setup({
+        ensure_installed = {
+            'bashls',
+            'gopls',
+        },
+        handlers = {
+            lsp_zero.default_setup,
+            lua_ls = function()
+                local lua_opts = lsp_zero.nvim_lua_ls()
+                require('lspconfig').lua_ls.setup(lua_opts)
+            end,
+        }
+    })
+end 
