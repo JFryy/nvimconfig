@@ -7,7 +7,7 @@ vim.opt.smartindent = true -- Smart autoindenting on new lines
 
 -- Line Numbers
 vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.relativenumber = false
 
 -- UI
 vim.opt.cursorline = true
