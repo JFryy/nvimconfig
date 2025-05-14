@@ -50,4 +50,5 @@ local dependencies = {
 return {
     opts = opts,
     dependencies = dependencies,
-} 
+}
+

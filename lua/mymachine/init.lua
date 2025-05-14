@@ -58,7 +58,16 @@ require("lazy").setup({
     -- neotree
     {
         "nvim-neo-tree/neo-tree.nvim",
-        dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons", "MunifTanjim/nui.nvim", }
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        },
+        init = function()
+            require("neo-tree").setup({
+                auto_open = false,
+            })
+        end,
     },
     {
         "lewis6991/gitsigns.nvim",
@@ -68,7 +77,11 @@ require("lazy").setup({
         end,
     },
     { 'MeanderingProgrammer/render-markdown.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
-    { "catppuccin/nvim",                           name = "catppuccin",                                 priority = 1000 },
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000
+    },
     -- Avante
     {
         "yetone/avante.nvim",
@@ -78,4 +91,10 @@ require("lazy").setup({
         build = "make",
         dependencies = require("mymachine.plugins.avante").dependencies,
     },
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
+        -- use opts = {} for passing setup options
+    }
 })
