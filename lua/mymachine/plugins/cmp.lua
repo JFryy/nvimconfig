@@ -21,4 +21,4 @@ return function()
             ghost_text = true
         }
     })
-end 
+end

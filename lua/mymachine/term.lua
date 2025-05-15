@@ -24,7 +24,7 @@ local function toggle_centered_terminal()
             style = 'minimal',
             border = 'rounded',
         })
-        if vim.api.nvim_buf_get_option(term_buf, 'buftype') ~= 'terminal' then
+        if vim.bo[term_buf].buftype ~= 'terminal' then
             vim.fn.termopen(vim.o.shell)
         end
         vim.api.nvim_buf_set_keymap(term_buf, 't', '<leader>tt', [[<C-\><C-n>]], { noremap = true, silent = true })
