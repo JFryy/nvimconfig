@@ -13,11 +13,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    -- the one and only
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         config = require("mymachine.plugins.treesitter"),
     },
+    -- the one and only
     {
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
@@ -69,6 +71,7 @@ require("lazy").setup({
             })
         end,
     },
+    -- line diffs for vcs changes
     {
         "lewis6991/gitsigns.nvim",
         event = "BufRead",
@@ -76,13 +79,14 @@ require("lazy").setup({
             require("gitsigns").setup()
         end,
     },
+    -- markdown rendering in place
     { 'MeanderingProgrammer/render-markdown.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
     {
         "catppuccin/nvim",
         name = "catppuccin",
         priority = 1000
     },
-    -- Avante
+    -- Avante AI, could be a bit more useful
     {
         "yetone/avante.nvim",
         event = "VeryLazy",
@@ -91,10 +95,18 @@ require("lazy").setup({
         build = "make",
         dependencies = require("mymachine.plugins.avante").dependencies,
     },
+    -- unfortunately needed
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = true
         -- use opts = {} for passing setup options
-    }
+    },
+    -- find replace helper
+    {
+        'nvim-pack/nvim-spectre',
+        config = function()
+            require('spectre').setup()
+        end,
+    },
 })

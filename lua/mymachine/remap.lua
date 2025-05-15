@@ -18,6 +18,9 @@ vim.keymap.set('n', '<leader>gg', builtin.git_status, { desc = "Git status" })
 vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = "Git commits" })
 vim.keymap.set('n', '<leader>bb', builtin.buffers, { desc = "Buffers" })
 
+-- Spectre
+vim.keymap.set('n', '<leader>fr', ':lua require("spectre").open()<CR>', { noremap = true, silent = true, desc = "Open Spectre" })
+
 -- Buffer navigation
 vim.keymap.set('n', '<S-l>', ':bnext<CR>', { desc = "Next buffer" })
 vim.keymap.set('n', '<S-h>', ':bprevious<CR>', { desc = "Previous buffer" })
