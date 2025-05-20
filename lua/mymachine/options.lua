@@ -39,7 +39,7 @@ vim.opt.ignorecase = true -- Ignore case when searching...
 vim.opt.smartcase = true  -- ...unless capital letters are used
 
 -- Colorscheme
-vim.cmd("colorscheme catppuccin-frappe")
+vim.cmd("colorscheme catppuccin-mocha")
 
 ---- Disable LSP diagnostics
 --vim.diagnostic.config({

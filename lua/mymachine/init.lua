@@ -66,9 +66,7 @@ require("lazy").setup({
             "MunifTanjim/nui.nvim",
         },
         init = function()
-            require("neo-tree").setup({
-                auto_open = false,
-            })
+            require("neo-tree").setup({})
         end,
     },
     -- line diffs for vcs changes
@@ -109,4 +107,137 @@ require("lazy").setup({
             require('spectre').setup()
         end,
     },
+    {
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        ---@type Flash.Config
+        opts = {},
+        -- stylua: ignore
+        keys = {
+            { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+            { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+            { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+            { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+            { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+        },
+    },
+    -- note: better completion -- helps with lua globals from nvim config, more to be moved out
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+    { -- optional blink completion source for require statements and module annotations
+        "saghen/blink.cmp",
+        opts = {
+            sources = {
+                -- add lazydev to your completion providers
+                default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+                providers = {
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        score_offset = 100,
+                    },
+                },
+            },
+        },
+        {
+            "JFryy/keytrail.nvim",
+            dependencies = {
+                "nvim-treesitter/nvim-treesitter",
+            },
+            config = function()
+                require('keytrail').setup()
+            end
+        },
+        {
+            'nvimdev/dashboard-nvim',
+            event = 'VimEnter',
+            config = function()
+                require('dashboard').setup {
+                    config = {
+                        center = {
+                            {
+                                icon = '',
+                                icon_hl = 'group',
+                                desc = 'description',
+                                desc_hl = 'group',
+                                key = 'shortcut key in dashboard buffer not keymap !!',
+                                key_hl = 'group',
+                                key_format = ' [%s]', -- `%s` will be substituted with value of `key`
+                                action = '',
+                            },
+                        },
+                        footer = {
+
+                        },
+                        vertical_center = false, -- Center the Dashboard on the vertical (from top to bottom)
+                    }                            -- config
+                }
+            end,
+            dependencies = { { 'nvim-tree/nvim-web-devicons' } }
+        },
+        {
+            'nvim-lualine/lualine.nvim',
+            dependencies = { 'nvim-tree/nvim-web-devicons' },
+            config = function()
+                require('lualine').setup({
+                    options = {
+                        theme = 'catppuccin',
+                        component_separators = { left = '|', right = '|' },
+                        section_separators = { left = '', right = '' },
+                    },
+                    sections = {
+                        lualine_a = { 'mode' },
+                        lualine_b = { 'branch', 'diff', 'diagnostics' },
+                        lualine_c = { 'filename' },
+                        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+                        lualine_y = { 'progress' },
+                        lualine_z = { 'location' }
+                    },
+                })
+            end
+        },
+        {
+            'onsails/lspkind.nvim',
+            config = function()
+                require('lspkind').init({
+                    mode = 'symbol_text',
+                    preset = 'codicons',
+                    symbol_map = {
+                        Text = "󰉿",
+                        Method = "󰆧",
+                        Function = "󰊕",
+                        Constructor = "",
+                        Field = "󰜢",
+                        Variable = "󰀫",
+                        Class = "󰠱",
+                        Interface = "",
+                        Module = "",
+                        Property = "󰜢",
+                        Unit = "󰑭",
+                        Value = "󰎠",
+                        Enum = "",
+                        Keyword = "󰌋",
+                        Snippet = "",
+                        Color = "󰏘",
+                        File = "󰈙",
+                        Reference = "󰈇",
+                        Folder = "󰉋",
+                        EnumMember = "",
+                        Constant = "󰏿",
+                        Struct = "󰙅",
+                        Event = "",
+                        Operator = "󰆕",
+                        TypeParameter = "",
+                    },
+                })
+            end
+        }
+    }
 })
