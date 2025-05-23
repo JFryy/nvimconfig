@@ -4,7 +4,6 @@ return function()
     local cmp = require('cmp')
     local cmp_action = lsp_zero.cmp_action()
     local luasnip = require('luasnip')
-
     cmp.setup({
         formatting = {
             format = function(entry, vim_item)
@@ -74,34 +73,12 @@ return function()
             ghost_text = true,
             native_menu = false,
         },
-        performance = {
-            max_view_entries = 50,
-        },
     })
-
     -- Set configuration for specific filetypes
     cmp.setup.filetype('gitcommit', {
         sources = cmp.config.sources({
             { name = 'git' },
             { name = 'buffer' },
-        })
-    })
-
-    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore)
-    cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-            { name = 'buffer' }
-        }
-    })
-
-    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore)
-    cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-            { name = 'path' }
-        }, {
-            { name = 'cmdline' }
         })
     })
 end
