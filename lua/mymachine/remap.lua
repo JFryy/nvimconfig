@@ -24,12 +24,13 @@ vim.keymap.set('n', '<leader>fr', ':lua require("spectre").open()<CR>', { norema
 -- Buffer navigation
 vim.keymap.set('n', '<S-l>', ':bnext<CR>', { desc = "Next buffer" })
 vim.keymap.set('n', '<S-h>', ':bprevious<CR>', { desc = "Previous buffer" })
-vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = "Delete buffer" })
 
 local exit_insert_mode_keys = { 'jk', 'jj', 'kk' }
 for _, keys in ipairs(exit_insert_mode_keys) do
     vim.keymap.set('i', keys, '<Esc>', { noremap = true, silent = true, desc = "Exit insert mode" })
 end
+
+vim.keymap.set('n', '<leader>dd', ':Dashboard<CR>', { noremap = true, silent = true, desc = "dashboard shortcut" })
 
 -- REPLACE ALL helper:
 -- Find string in all files using Telescope and populate quick fix list using
