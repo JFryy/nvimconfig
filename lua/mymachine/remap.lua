@@ -32,6 +32,14 @@ end
 
 vim.keymap.set('n', '<leader>dd', ':Dashboard<CR>', { noremap = true, silent = true, desc = "dashboard shortcut" })
 
+-- code companion
+vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+
+vim.cmd([[cab cc CodeCompanion]])
+
+vim.api.nvim_set_keymap('n', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
 -- REPLACE ALL helper:
 -- Find string in all files using Telescope and populate quick fix list using
 -- ctrl + q

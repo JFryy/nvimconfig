@@ -79,28 +79,35 @@ require("lazy").setup({
     },
     -- markdown rendering in place
     { 'MeanderingProgrammer/render-markdown.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
+
     {
-        'rose-pine/neovim',
-        name = 'rose-pine',
-        lazy = false,
+        "catppuccin/nvim",
+        name = "catppuccin",
         priority = 1000,
+        lazy = false,
         config = function()
-            require('rose-pine').setup({
-                disable_background = true,
-                disable_float_background = true,
-                disable_italics = true,
+            require("catppuccin").setup({
+                flavour = "mocha", -- latte, frappe, macchiato, mocha
+                transparent_background = true,
+                term_colors = true,
+                styles = {
+                    comments = { "italic" },
+                    functions = { "italic" },
+                    keywords = { "italic" },
+                    strings = { "italic" },
+                    variables = { "italic" },
+                },
             })
-            vim.cmd.colorscheme 'rose-pine'
+            vim.cmd.colorscheme 'catppuccin'
         end
     },
-    -- Avante AI, could be a bit more useful
     {
-        "yetone/avante.nvim",
-        event = "VeryLazy",
-        version = false,
-        opts = require("mymachine.plugins.avante").opts,
-        build = "make",
-        dependencies = require("mymachine.plugins.avante").dependencies,
+        "olimorris/codecompanion.nvim",
+        opts = {},
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
     },
     -- unfortunately needed
     {
@@ -150,7 +157,7 @@ require("lazy").setup({
         opts = {
             -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
             -- 'super-tab' for mappings similar to vscode (tab to accept)
-            'enter',
+            -- 'enter',
             -- 'none' for no mappings
             --
             -- All presets have the following mappings:
@@ -230,7 +237,6 @@ require("lazy").setup({
         config = function()
             require('lualine').setup({
                 options = {
-                    theme = 'rose-pine',
                     component_separators = { left = '|', right = '|' },
                     section_separators = { left = '', right = '' },
                 },
