@@ -81,3 +81,15 @@ vim.diagnostic.config({
     },
 })
 
+-- Customize LSP hover window: rounded border and max size
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+  max_width = 80,
+  max_height = 20,
+})
+
+-- Add manual hover keybinding (commonly K)
+vim.keymap.set('n', 'K', function()
+  vim.lsp.buf.hover()
+end, { desc = 'Show LSP hover documentation' })
+
