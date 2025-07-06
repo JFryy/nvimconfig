@@ -8,6 +8,16 @@ return function()
                 hidden = false,
             },
         },
+        extensions = {
+            ["ui-select"] = {
+                require("telescope.themes").get_dropdown {
+                    -- even more opts
+                }
+            }
+        }
     }
+    
+    -- Set telescope as the picker for vim.ui.select
+    require("telescope").load_extension("ui-select")
 end
 

@@ -17,12 +17,15 @@ require("lazy").setup({
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        config = require("mymachine.plugins.treesitter"),
+        branch = "main",
     },
     -- the one and only
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' },
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-ui-select.nvim'
+        },
         init = require("mymachine.plugins.telescope"),
     },
     -- lsp-zero itself
@@ -77,9 +80,6 @@ require("lazy").setup({
             require("gitsigns").setup()
         end,
     },
-    -- markdown rendering in place
-    { 'MeanderingProgrammer/render-markdown.nvim', dependencies = { 'nvim-treesitter/nvim-treesitter' } },
-
     {
         "catppuccin/nvim",
         name = "catppuccin",
@@ -152,9 +152,6 @@ require("lazy").setup({
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },
-        config = function()
-            require('keytrail').setup()
-        end
     },
     {
         'nvimdev/dashboard-nvim',
@@ -256,3 +253,19 @@ require("lazy").setup({
         end,
     }
 })
+
+-- temporary until hopefully added to mason
+local systemd_lsp_path = '/Users/james/repos/systemd-lsp/target/release/systemd-lsp'
+if vim.fn.filereadable(systemd_lsp_path) == 1 then
+    vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = "*.service",
+        callback = function()
+            vim.bo.filetype = "systemd"
+            vim.lsp.start({
+                name = 'systemd_ls',
+                cmd = { systemd_lsp_path },
+                root_dir = vim.fn.getcwd(),
+            })
+        end,
+    })
+end
