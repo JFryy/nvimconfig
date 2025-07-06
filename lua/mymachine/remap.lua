@@ -9,14 +9,14 @@ vim.cmd('command! Q q')
 vim.keymap.set('n', '<C-n>', ':Neotree toggle<CR>', { noremap = true, silent = true, desc = "Toggle Neo-tree" })
 vim.keymap.set('n', '<leader>ex', ':Explore<CR>', { desc = "Delete buffer" })
 
--- Telescope
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = "Find files" })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = "Live grep" })
-vim.keymap.set('n', '<leader>rr', builtin.command_history, { desc = "Command history" })
-vim.keymap.set('n', '<leader>gg', builtin.git_status, { desc = "Git status" })
-vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = "Git commits" })
-vim.keymap.set('n', '<leader>bb', builtin.buffers, { desc = "Buffers" })
+-- FZF-lua
+local fzf = require('fzf-lua')
+vim.keymap.set('n', '<leader>ff', fzf.files, { desc = "Find files" })
+vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = "Live grep" })
+vim.keymap.set('n', '<leader>rr', fzf.command_history, { desc = "Command history" })
+vim.keymap.set('n', '<leader>gg', fzf.git_status, { desc = "Git status" })
+vim.keymap.set('n', '<leader>gc', fzf.git_commits, { desc = "Git commits" })
+vim.keymap.set('n', '<leader>bb', fzf.buffers, { desc = "Buffers" })
 
 -- Spectre
 vim.keymap.set('n', '<leader>fr', ':lua require("spectre").open()<CR>', { noremap = true, silent = true, desc = "Open Spectre" })
@@ -30,7 +30,6 @@ for _, keys in ipairs(exit_insert_mode_keys) do
     vim.keymap.set('i', keys, '<Esc>', { noremap = true, silent = true, desc = "Exit insert mode" })
 end
 
-vim.keymap.set('n', '<leader>dd', ':Dashboard<CR>', { noremap = true, silent = true, desc = "dashboard shortcut" })
 
 -- code companion
 vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })

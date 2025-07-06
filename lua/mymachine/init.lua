@@ -13,49 +13,35 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    -- the one and only
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         branch = "main",
     },
-    -- the one and only
     {
-        'nvim-telescope/telescope.nvim',
+        'ibhagwan/fzf-lua',
         dependencies = {
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-ui-select.nvim'
+            'nvim-tree/nvim-web-devicons',
         },
         init = require("mymachine.plugins.telescope"),
     },
-    -- lsp-zero itself
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        lazy = true,
-        config = false,
-        init = function()
-            vim.g.lsp_zero_extend_cmp = 1
-            vim.g.lsp_zero_extend_lspconfig = 1
-        end,
-    },
-    -- mason config recommended by lsp-zero
+    -- mason config
     { 'williamboman/mason.nvim', lazy = false, config = true, },
-    { 'mfussenegger/nvim-lint' },
     {
-        'hrsh7th/nvim-cmp',
+        'saghen/blink.cmp',
         event = 'InsertEnter',
+        version = 'v0.*',
         dependencies = {
-            { 'L3MON4D3/LuaSnip' },
+            'rafamadriz/friendly-snippets',
         },
         config = require("mymachine.plugins.cmp"),
     },
-    -- LSP Configuration grabbed from lsp-zero
+    -- LSP Configuration
     {
         'neovim/nvim-lspconfig',
         cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
         event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' },
             { 'williamboman/mason-lspconfig.nvim' },
         },
         config = require("mymachine.plugins.lspconfig"),
@@ -109,12 +95,34 @@ require("lazy").setup({
             "nvim-treesitter/nvim-treesitter",
         },
     },
-    -- unfortunately needed
     {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = true
         -- use opts = {} for passing setup options
+    },
+    -- better commenting: gcc for line, v<gc> for visual selection
+    {
+        'numToStr/Comment.nvim',
+        event = "VeryLazy",
+        config = function()
+            require('Comment').setup()
+        end
+    },
+    -- visual indent guides
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        main = 'ibl',
+        event = { 'BufReadPost', 'BufNewFile' },
+        config = function()
+            require('ibl').setup({
+                indent = {
+                    char = '│',
+                    tab_char = '│',
+                },
+                scope = { enabled = false },
+            })
+        end
     },
     -- find replace helper
     {
@@ -152,34 +160,6 @@ require("lazy").setup({
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },
-    },
-    {
-        'nvimdev/dashboard-nvim',
-        event = 'VimEnter',
-        config = function()
-            require('dashboard').setup {
-                config = {
-                    center = {
-                        {
-                            icon = '',
-                            icon_hl = 'group',
-                            desc = 'description',
-                            desc_hl = 'group',
-                            key = 'shortcut key in dashboard buffer not keymap !!',
-                            key_hl = 'group',
-                            key_format = ' [%s]', -- `%s` will be substituted with value of `key`
-                            action = '',
-                        },
-                    },
-                    footer = {
-
-                        'My Amazingly Bloated Text Editing Experience!!!',
-                    },
-                    vertical_center = false, -- Center the Dashboard on the vertical (from top to bottom)
-                }                            -- config
-            }
-        end,
-        dependencies = { { 'nvim-tree/nvim-web-devicons' } }
     },
     {
         'nvim-lualine/lualine.nvim',
@@ -251,7 +231,7 @@ require("lazy").setup({
                 },
             })
         end,
-    }
+    },
 })
 
 -- temporary until hopefully added to mason
