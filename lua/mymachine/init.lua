@@ -55,7 +55,11 @@ require("lazy").setup({
             "MunifTanjim/nui.nvim",
         },
         init = function()
-            require("neo-tree").setup({})
+            require("neo-tree").setup({
+                filesystem = {
+                    hijack_netrw_behavior = "disabled",
+                },
+            })
         end,
     },
     -- line diffs for vcs changes
