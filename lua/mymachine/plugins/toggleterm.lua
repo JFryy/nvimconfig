@@ -7,7 +7,7 @@ return function()
         insert_mappings = true,
         terminal_mappings = true,
         persist_size = true,
-        persist_mode = true,
+        persist_mode = false,
         direction = 'horizontal',
         close_on_exit = true,
         shell = vim.o.shell,
@@ -27,9 +27,6 @@ return function()
                 link = 'FloatBorder'
             },
         },
-        winbar = {
-            enabled = false,
-        }
     })
 
     -- Terminal window mappings for easy navigation

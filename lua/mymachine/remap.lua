@@ -154,7 +154,3 @@ vim.cmd([[cab cc CodeCompanion]])
 -- Direct Code Companion access
 vim.api.nvim_set_keymap('n', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
--- REPLACE ALL helper:
--- Find string in all files using Telescope and populate quick fix list using
--- ctrl + q
--- :cdo %s/oldstring/newstring/g | update
