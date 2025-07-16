@@ -71,25 +71,11 @@ require("lazy").setup({
         end,
     },
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        priority = 1000,
+        'f4z3r/gruvbox-material.nvim',
+        name = 'gruvbox-material',
         lazy = false,
-        config = function()
-            require("catppuccin").setup({
-                flavour = "mocha", -- latte, frappe, macchiato, mocha
-                transparent_background = true,
-                term_colors = true,
-                styles = {
-                    comments = { "italic" },
-                    functions = { "italic" },
-                    keywords = { "italic" },
-                    strings = { "italic" },
-                    variables = { "italic" },
-                },
-            })
-            vim.cmd.colorscheme 'catppuccin'
-        end
+        priority = 1000,
+        opts = {},
     },
     {
         "olimorris/codecompanion.nvim",
@@ -103,7 +89,6 @@ require("lazy").setup({
         'windwp/nvim-autopairs',
         event = "InsertEnter",
         config = true
-        -- use opts = {} for passing setup options
     },
     -- better commenting: gcc for line, v<gc> for visual selection
     {
