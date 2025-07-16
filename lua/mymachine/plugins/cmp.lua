@@ -1,84 +1,56 @@
 return function()
-    local lsp_zero = require('lsp-zero')
-    lsp_zero.extend_cmp()
-    local cmp = require('cmp')
-    local cmp_action = lsp_zero.cmp_action()
-    local luasnip = require('luasnip')
-    cmp.setup({
-        formatting = {
-            format = function(entry, vim_item)
-                -- Kind icons
-                vim_item.kind = string.format('%s %s', require('lspkind').presets.default[vim_item.kind], vim_item.kind)
-                -- Source
-                vim_item.menu = ({
-                    buffer = "[Buffer]",
-                    nvim_lsp = "[LSP]",
-                    luasnip = "[Snippet]",
-                    nvim_lua = "[Lua]",
-                    latex_symbols = "[LaTeX]",
-                })[entry.source.name]
-                return vim_item
-            end,
-        },
-        mapping = cmp.mapping.preset.insert({
-            -- Enter key to confirm completion
-            ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    require('blink.cmp').setup({
+        keymap = {
+            ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+            ['<C-e>'] = { 'hide' },
+            ['<C-y>'] = { 'select_and_accept' },
 
-            -- Tab key to trigger completion and navigate
-            ['<Tab>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                else
-                    fallback()
-                end
-            end, { 'i', 's' }),
+            ['<Up>'] = { 'select_prev', 'fallback' },
+            ['<Down>'] = { 'select_next', 'fallback' },
 
-            ['<S-Tab>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif luasnip.jumpable(-1) then
-                    luasnip.jump(-1)
-                else
-                    fallback()
-                end
-            end, { 'i', 's' }),
+            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
 
-            -- Other mappings
-            ['<C-Space>'] = cmp.mapping.complete(),
-            ['<C-j>'] = cmp.mapping.scroll_docs(-4),
-            ['<C-k>'] = cmp.mapping.scroll_docs(4),
-            ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-            ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-            ['<C-e>'] = cmp.mapping.abort(),
-        }),
-        sources = cmp.config.sources({
-            { name = 'nvim_lsp' },
-            { name = 'luasnip' },
-            { name = 'buffer' },
-            { name = 'path' },
-            { name = 'nvim_lua' },
-        }),
-        snippet = {
-            expand = function(args)
-                require('luasnip').lsp_expand(args.body)
-            end,
+            ['<Tab>'] = { 'accept', 'fallback' },
+            ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+
+            ['<CR>'] = { 'accept', 'fallback' },
         },
-        window = {
-            completion = cmp.config.window.bordered(),
-            documentation = cmp.config.window.bordered(),
+
+        appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = 'mono'
         },
-        experimental = {
-            ghost_text = true,
-            native_menu = false,
+
+        sources = {
+            default = { 'lsp', 'path', 'snippets', 'buffer' },
         },
-    })
-    -- Set configuration for specific filetypes
-    cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-            { name = 'git' },
-            { name = 'buffer' },
-        })
+
+        completion = {
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 500,
+                window = {
+                    border = 'rounded',
+                },
+            },
+            menu = {
+                border = 'rounded',
+                draw = {
+                    treesitter = { 'lsp' },
+                    columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon', 'kind' } },
+                },
+            },
+            ghost_text = {
+                enabled = true,
+            },
+        },
+
+        signature = {
+            enabled = true,
+            window = {
+                border = 'rounded',
+            },
+        },
     })
 end
