@@ -17,6 +17,21 @@ require("lazy").setup({
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         branch = "main",
+        config = function()
+            require("nvim-treesitter").setup({
+                highlight = {
+                    enable = true,
+                },
+            })
+            require'nvim-treesitter'.install { 'go', 'python', 'bash', 'lua', 'rust', 'javascript', 'typescript', 'html', 'css', 'json', 'yaml' }
+            -- Start treesitter for specified filetypes
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = {'go', 'python', 'bash', 'lua', 'rust', 'javascript', 'typescript', 'html', 'css', 'json', 'yaml' },
+                callback = function()
+                    vim.treesitter.start()
+                end,
+            })
+        end,
     },
     {
         'ibhagwan/fzf-lua',
