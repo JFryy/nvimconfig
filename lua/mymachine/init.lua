@@ -85,13 +85,7 @@ require("lazy").setup({
             require("gitsigns").setup()
         end,
     },
-    {
-        'f4z3r/gruvbox-material.nvim',
-        name = 'gruvbox-material',
-        lazy = false,
-        priority = 1000,
-        opts = {},
-    },
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000, opts = { flavour = "mocha" } },
     {
         "olimorris/codecompanion.nvim",
         opts = {},
@@ -244,7 +238,8 @@ require("lazy").setup({
     -- amongst your other plugins
     { 'akinsho/toggleterm.nvim', version = "*", config = require("mymachine.plugins.toggleterm") }
 })
-
+-- set catpuccin mocha as color scheme
+vim.cmd.colorscheme("catppuccin")
 -- temporary until hopefully added to mason
 local systemd_lsp_path = '/Users/james/repos/systemd-lsp/target/release/systemd-lsp'
 if vim.fn.filereadable(systemd_lsp_path) == 1 then
