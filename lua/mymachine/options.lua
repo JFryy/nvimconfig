@@ -1,3 +1,14 @@
+-- Refresh
+
+-- set autoread
+-- autocmd BufEnter,CursorHold,CursorHoldI * checktime
+vim.cmd([[
+  augroup autoread
+    autocmd!
+    autocmd BufEnter,CursorHold,CursorHoldI * checktime
+  augroup END
+]])
+
 -- Indentation
 vim.opt.tabstop = 4        -- Number of spaces that a <Tab> in the file counts for
 vim.opt.shiftwidth = 4     -- Number of spaces to use for each step of (auto)indent
