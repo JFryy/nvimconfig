@@ -61,8 +61,7 @@ return function()
             color_icons = true,
         },
     }
-    
+
     -- Set fzf-lua as the picker for vim.ui.select
     require('fzf-lua').register_ui_select()
 end
-

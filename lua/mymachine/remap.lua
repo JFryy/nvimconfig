@@ -1,6 +1,7 @@
 -- ============================================================================
+
 -- NEOVIM KEYMAP CONFIGURATION
--- ============================================================================
+-- -- ============================================================================
 -- This file contains all custom keymaps for enhanced workflow efficiency
 -- Leader key: <Space>
 --
@@ -57,14 +58,6 @@
 --   Ctrl+b/f        → Scroll documentation
 --   Enter           → Accept completion
 --
--- TERMINAL (ToggleTerm):
---   Ctrl+\          → Toggle terminal
---   <leader>tf      → Toggle floating terminal
---   <leader>th      → Toggle horizontal terminal
---   <leader>tv      → Toggle vertical terminal
---   <leader>h       → Toggle htop in floating terminal
---   Esc/jk          → Exit terminal mode (in terminal)
---   Ctrl+h/j/k/l    → Navigate windows (in terminal)
 --
 -- MOTION & SEARCH (Flash.nvim):
 --   s               → Flash jump
@@ -90,7 +83,7 @@
 --
 -- SEARCH & REPLACE WORKFLOW:
 --   1. Use <leader>fg to find text across files
---   2. Press Ctrl+q in results to populate quickfix list
+--   2. Press tab to add files to quickfix list
 --   3. Run: :cdo %s/oldstring/newstring/g | update
 -- ============================================================================
 
@@ -103,13 +96,15 @@ vim.g.mapleader = ' '
 -- Common typos and shortcuts
 vim.cmd('command! W w') -- :W saves file (common typo)
 vim.cmd('command! Q q') -- :Q quits (common typo)
+vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>',
+    { noremap = true, silent = true, desc = "Code Action" })
 
 -- ============================================================================
 -- FILE EXPLORATION
 -- ============================================================================
 -- Toggle file explorer and native explore
 vim.keymap.set('n', '<C-n>', ':Neotree toggle<CR>', { noremap = true, silent = true, desc = "Toggle Neo-tree" })
-vim.keymap.set('n', '<leader>ex', ':Explore<CR>', { desc = "Open native file explorer" })
+vim.keymap.set('n', '<leader>ex', ':Oil<CR>', { desc = "Open native file explorer" })
 
 -- ============================================================================
 -- FUZZY FINDING WITH FZF-LUA
@@ -120,6 +115,7 @@ vim.keymap.set('n', '<leader>ff', fzf.files, { desc = "Find files" })           
 vim.keymap.set('n', '<leader>fg', fzf.live_grep, { desc = "Live grep" })            -- Search text content
 vim.keymap.set('n', '<leader>r', fzf.command_history, { desc = "Command history" }) -- Recent commands
 vim.keymap.set('n', '<C-g>', fzf.git_status, { desc = "Git status" })               -- Git file status
+vim.keymap.set('n', '<leader>gg', fzf.git_status, { desc = "Git status" })          -- Git file status
 vim.keymap.set('n', '<leader>gc', fzf.git_commits, { desc = "Git commits" })        -- Browse commits
 vim.keymap.set('n', '<C-b>', fzf.buffers, { desc = "Buffers" })                     -- Switch buffers
 
@@ -129,6 +125,10 @@ vim.keymap.set('n', '<C-b>', fzf.buffers, { desc = "Buffers" })                 
 -- Quick buffer switching
 vim.keymap.set('n', '<C-.>', ':bnext<CR>', { desc = "Next buffer" })         -- Next buffer
 vim.keymap.set('n', '<C-,>', ':bprevious<CR>', { desc = "Previous buffer" }) -- Previous buffer
+---@diagnostic disable-next-line: deprecated
+vim.keymap.set("n", "]g", function() vim.diagnostic.goto_next() end)         -- Next diagnostic
+---@diagnostic disable-next-line: deprecated
+vim.keymap.set("n", "[g", function() vim.diagnostic.goto_prev() end)         -- Previous diagnostic
 
 -- ============================================================================
 -- INSERT MODE ESCAPES
@@ -145,7 +145,7 @@ end
 -- AI-powered coding assistance
 vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>",
     { noremap = true, silent = true, desc = "AI Actions Menu" })
-vim.keymap.set({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>",
+vim.keymap.set({ "n", "v" }, "<Leader>a", "<cmd>CodeCompanionChat Toggle<cr>",
     { noremap = true, silent = true, desc = "Toggle AI Chat" })
 
 -- Command alias for Code Companion

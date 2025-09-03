@@ -39,10 +39,11 @@ return function()
             },
             project = {
                 enable = true,
-                limit = 10,
-                icon = ' ',
+                limit = 15,
+                icon = '',
                 label = '',
                 action = function(path)
+                    vim.cmd('cd ' .. path)
                     require('fzf-lua').files({ cwd = path })
                 end
             },

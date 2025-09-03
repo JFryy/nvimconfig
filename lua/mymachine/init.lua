@@ -23,10 +23,10 @@ require("lazy").setup({
                     enable = true,
                 },
             })
-            require'nvim-treesitter'.install { 'go', 'python', 'bash', 'lua', 'rust', 'javascript', 'typescript', 'html', 'css', 'json', 'yaml' }
+            require 'nvim-treesitter'.install { 'go', 'python', 'bash', 'lua', 'rust', 'javascript', 'typescript', 'html', 'css', 'json', 'yaml' }
             -- Start treesitter for specified filetypes
             vim.api.nvim_create_autocmd("FileType", {
-                pattern = {'go', 'python', 'bash', 'lua', 'rust', 'javascript', 'typescript', 'html', 'css', 'json', 'yaml' },
+                pattern = { 'go', 'python', 'bash', 'lua', 'rust', 'javascript', 'typescript', 'html', 'css', 'json', 'yaml' },
                 callback = function()
                     vim.treesitter.start()
                 end,
@@ -41,7 +41,7 @@ require("lazy").setup({
         init = require("mymachine.plugins.fzf"),
     },
     -- mason config
-    { 'williamboman/mason.nvim', lazy = false,  config = true, },
+    { 'williamboman/mason.nvim', lazy = false, config = true, },
     {
         'saghen/blink.cmp',
         event = 'InsertEnter',
@@ -85,7 +85,6 @@ require("lazy").setup({
             require("gitsigns").setup()
         end,
     },
-    { "catppuccin/nvim", name = "catppuccin", priority = 1000, opts = { flavour = "mocha" } },
     {
         "olimorris/codecompanion.nvim",
         opts = {},
@@ -235,11 +234,28 @@ require("lazy").setup({
         config = require("mymachine.plugins.dashboard"),
         dependencies = { { 'nvim-tree/nvim-web-devicons' } }
     },
-    -- amongst your other plugins
-    { 'akinsho/toggleterm.nvim', version = "*", config = require("mymachine.plugins.toggleterm") }
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
+        config = function()
+            vim.cmd.colorscheme(
+                "catppuccin")
+        end
+    },
+    {
+        "f-person/git-blame.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- your configuration comes here
+            -- for example
+            enabled = true, -- if you want to enable the plugin
+            message_template = " [<summary>] • [<date>] • <author> | <<sha>>", -- template for the blame message, check the Message template section for more options
+            date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
+            virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
+        },
+    }
 })
--- set catpuccin mocha as color scheme
-vim.cmd.colorscheme("catppuccin")
 -- temporary until hopefully added to mason
 local systemd_lsp_path = '/Users/james/repos/systemd-lsp/target/release/systemd-lsp'
 if vim.fn.filereadable(systemd_lsp_path) == 1 then

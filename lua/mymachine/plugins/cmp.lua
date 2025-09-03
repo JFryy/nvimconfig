@@ -26,7 +26,22 @@ return function()
             default = { 'lsp', 'path', 'snippets', 'buffer' },
         },
 
+        cmdline = {
+            keymap = {
+                ['<Tab>'] = { 'fallback' },
+                ['<S-Tab>'] = { 'fallback' },
+            },
+        },
+
         completion = {
+            trigger = {
+                show_in_snippet = true,
+            },
+            accept = {
+                auto_brackets = {
+                    enabled = true,
+                },
+            },
             documentation = {
                 auto_show = true,
                 auto_show_delay_ms = 500,

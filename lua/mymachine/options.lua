@@ -1,3 +1,14 @@
+-- Refresh
+
+-- set autoread
+-- autocmd BufEnter,CursorHold,CursorHoldI * checktime
+vim.cmd([[
+  augroup autoread
+    autocmd!
+    autocmd BufEnter,CursorHold,CursorHoldI * checktime
+  augroup END
+]])
+
 -- Indentation
 vim.opt.tabstop = 4        -- Number of spaces that a <Tab> in the file counts for
 vim.opt.shiftwidth = 4     -- Number of spaces to use for each step of (auto)indent
@@ -19,6 +30,7 @@ vim.opt.sidescrolloff = 8 -- Keep 8 columns visible left/right of cursor
 vim.opt.splitbelow = true -- Horizontal splits go below
 vim.opt.splitright = true -- Vertical splits go to the right
 vim.opt.mouse = 'a'       -- Enable mouse support
+vim.cmd('let g:gitblame_delay = 1500') -- Git blame delay
 
 -- Undo
 vim.opt.undofile = true
@@ -46,7 +58,7 @@ vim.opt.smartcase = true  -- ...unless capital letters are used
 -- disable virtual_text (inline) diagnostics and use floating window
 -- format the message such that it shows source, message and
 -- the error code. Show the message with <space>e
-vim.o.updatetime = 250  -- Faster CursorHold
+vim.o.updatetime = 250 -- Faster CursorHold
 vim.cmd([[
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]])
@@ -82,14 +94,13 @@ vim.diagnostic.config({
 })
 
 -- Customize LSP hover window: rounded border and max size
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = "rounded",
-  max_width = 80,
-  max_height = 20,
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.buf.hover({
+    border = "rounded",
+    max_width = 80,
+    max_height = 20,
 })
 
 -- Add manual hover keybinding (commonly K)
 vim.keymap.set('n', 'K', function()
-  vim.lsp.buf.hover()
+    vim.lsp.buf.hover()
 end, { desc = 'Show LSP hover documentation' })
-
