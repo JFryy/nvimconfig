@@ -147,6 +147,7 @@ require("lazy").setup({
     },
     {
         'jfryy/keytrail.nvim',
+        branch = "main",
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },
@@ -221,6 +222,13 @@ require("lazy").setup({
                 },
             })
         end,
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
+        opts = {},
     },
     {
         'stevearc/oil.nvim',
