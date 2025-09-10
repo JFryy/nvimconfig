@@ -18,7 +18,7 @@ vim.opt.smartindent = true -- Smart autoindenting on new lines
 
 -- Line Numbers
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 
 -- UI
 vim.opt.cursorline = true
@@ -30,7 +30,7 @@ vim.opt.sidescrolloff = 8 -- Keep 8 columns visible left/right of cursor
 vim.opt.splitbelow = true -- Horizontal splits go below
 vim.opt.splitright = true -- Vertical splits go to the right
 vim.opt.mouse = 'a'       -- Enable mouse support
-vim.cmd('let g:gitblame_delay = 1500') -- Git blame delay
+vim.cmd('let g:gitblame_delay = 5000') -- Git blame delay
 
 -- Undo
 vim.opt.undofile = true

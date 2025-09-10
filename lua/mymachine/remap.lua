@@ -117,7 +117,7 @@ vim.keymap.set('n', '<leader>r', fzf.command_history, { desc = "Command history"
 vim.keymap.set('n', '<C-g>', fzf.git_status, { desc = "Git status" })               -- Git file status
 vim.keymap.set('n', '<leader>gg', fzf.git_status, { desc = "Git status" })          -- Git file status
 vim.keymap.set('n', '<leader>gc', fzf.git_commits, { desc = "Git commits" })        -- Browse commits
-vim.keymap.set('n', '<C-b>', fzf.buffers, { desc = "Buffers" })                     -- Switch buffers
+vim.keymap.set('n', '<leader>bb', fzf.buffers, { desc = "Buffers" })                -- Switch buffers
 
 -- ============================================================================
 -- BUFFER NAVIGATION
