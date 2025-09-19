@@ -23,7 +23,7 @@ return function()
                             SELECT = ' S ',
                             TERMINAL = ' T ',
                         }
-                        return mode_map[str] or ' ' .. str:sub(1, 1) .. ' '
+                        return (mode_map[str] or ' ') .. str:sub(1, 1) .. ' '
                     end,
                     color = { gui = 'bold' },
                 }

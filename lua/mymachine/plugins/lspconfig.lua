@@ -17,7 +17,7 @@ return function()
             end, opts)
             vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
             vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-            vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+            vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts) -- note: this can be pretty useful
             vim.keymap.set('n', '<leader>f', function()
                 vim.lsp.buf.format { async = true }
             end, opts)

@@ -25,11 +25,12 @@ vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes' -- Always show the sign column
 vim.opt.wrap = false
 vim.opt.termguicolors = true
-vim.opt.scrolloff = 8     -- Keep 8 lines visible above/below cursor
-vim.opt.sidescrolloff = 8 -- Keep 8 columns visible left/right of cursor
-vim.opt.splitbelow = true -- Horizontal splits go below
-vim.opt.splitright = true -- Vertical splits go to the right
-vim.opt.mouse = 'a'       -- Enable mouse support
+vim.opt.scrolloff = 8                  -- Keep 8 lines visible above/below cursor
+vim.opt.sidescrolloff = 8              -- Keep 8 columns visible left/right of cursor
+vim.opt.splitbelow = true              -- Horizontal splits go below
+vim.opt.splitright = true              -- Vertical splits go to the right
+vim.opt.mouse = 'a'                    -- Enable mouse support
+vim.opt.showcmd = false                -- Don't show keypresses
 vim.cmd('let g:gitblame_delay = 5000') -- Git blame delay
 
 -- Undo
@@ -95,7 +96,6 @@ vim.diagnostic.config({
 
 -- Customize LSP hover window: rounded border and max size
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.buf.hover({
-    border = "rounded",
     max_width = 80,
     max_height = 20,
 })
