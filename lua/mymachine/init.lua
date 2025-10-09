@@ -10,7 +10,11 @@ if not vim.loop.fs_stat(lazypath) then
         lazypath,
     })
 end
-
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.cmd([[highlight Normal ctermbg=none guibg=none]])
+    end
+})
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
