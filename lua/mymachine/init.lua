@@ -46,7 +46,7 @@ require("lazy").setup({
         init = require("mymachine.plugins.fzf"),
     },
     -- mason config
-    { 'williamboman/mason.nvim', lazy = false, config = true, },
+    { 'williamboman/mason.nvim', lazy = false,  config = true, },
     {
         'saghen/blink.cmp',
         event = 'InsertEnter',
@@ -285,7 +285,10 @@ require("lazy").setup({
             date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
             virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
         },
-    }
+    },
+    { 'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons' },
+    { 'akinsho/toggleterm.nvim', version = "*", config = true }
+
 })
 -- temporary until hopefully added to mason
 local systemd_lsp_path = '/Users/james/repos/systemd-lsp/target/release/systemd-lsp'

@@ -154,3 +154,38 @@ vim.cmd([[cab cc CodeCompanion]])
 -- Direct Code Companion access
 vim.api.nvim_set_keymap('n', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
+
+
+
+-- ToggleTerm configuration for Neovim
+require('toggleterm').setup {
+    size = 20,
+    open_mapping = [[<c-\>]],
+    hide_numbers = true,
+    shade_filetypes = {},
+    shade_terminals = true,
+    shading_factor = 2,
+    start_in_insert = true,
+    insert_mappings = true,
+    persist_size = true,
+    direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float'
+    close_on_exit = true,
+    shell = vim.o.shell,
+    float_opts = {
+        border = 'curved',
+        winblend = 3,
+        highlights = {
+            border = 'Normal',
+            background = 'Normal',
+        }
+    }
+}
+
+-- Optional: Keymap to toggle terminal
+vim.keymap.set('n', '<leader>tt', function()
+    require('toggleterm').toggle()
+end, { desc = 'Toggle Terminal' })
+
+-- Bufferline configuration for Neovim
+vim.opt.termguicolors = true
+require("bufferline").setup {}

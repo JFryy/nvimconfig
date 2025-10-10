@@ -79,7 +79,15 @@ return function()
                         return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
                     end,
                     color = { fg = '#6c7086' },
-                }
+                },
+                {
+                    function()
+                        -- Show current working directory (pwd)
+                        local cwd = vim.fn.getcwd()
+                        return ' ' .. cwd
+                    end,
+                    color = { fg = '#6c7086', gui = 'bold' },
+                },
             },
             lualine_x = {
                 {
