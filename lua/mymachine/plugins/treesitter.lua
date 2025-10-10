@@ -2,6 +2,7 @@ return function()
     require('nvim-treesitter.install').prefer_git = true
     require('nvim-treesitter.config').setup({
         ensure_installed = {
+            "yaml",
             "lua",
             "vim",
             "vimdoc",
