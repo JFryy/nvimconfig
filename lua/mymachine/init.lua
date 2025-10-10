@@ -16,7 +16,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
     end
 })
 vim.opt.rtp:prepend(lazypath)
-
 require("lazy").setup({
     {
         "nvim-treesitter/nvim-treesitter",

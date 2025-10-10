@@ -48,7 +48,7 @@ return function()
             },
         },
         files = {
-            file_ignore_patterns = { '%.git/', '%.svn/', 'venv/', '%.venv/' },
+            file_ignore_patterns = { '%.git/', '%.svn/', 'venv/', '%.venv/', '%.terraform/' },
             git_icons = true,
             color_icons = true,
         },
