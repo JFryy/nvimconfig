@@ -31,13 +31,36 @@ return function()
         ensure_installed = {
             'bashls',
             'gopls',
-            'lua_ls'
+            'lua_ls',
+            'yamlls',
+            'helm_ls',
+            'gopls',
         },
         handlers = {
             function(server_name)
                 lspconfig[server_name].setup({})
             end,
+            ['helm_ls'] = function()
+                lspconfig.helm_ls.setup({
+                    cmd = { "helm_ls", "serve" },
+                    filetypes = { "helm", "helmfile", "yaml.helm", "yaml.helm-values" },
+                    settings = {
+                        ['helm-ls'] = {
+                            yamlls = {
+                                enabled = true,
+                                enabledForFilesGlob = "*.{yaml,yml,tpl}",
+                            },
+                        },
+                    },
+                    capabilities = {
+                        workspace = {
+                            didChangeWatchedFiles = {
+                                dynamicRegistration = true,
+                            },
+                        },
+                    },
+                })
+            end,
         }
     })
-
 end

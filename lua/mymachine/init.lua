@@ -151,48 +151,64 @@ require("lazy").setup({
     },
     {
         'jfryy/keytrail.nvim',
-        branch = "main",
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },
+        config = function()
+            require("keytrail").setup({
+                popup = { enabled = false },
+                statusline = { enabled = true, Prefix = "Path: ", empty = "" }
+            })
+        end,
     },
     {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            require('lualine').setup({
+            local function keytrail_component()
+                local ok, keytrail = pcall(require, "keytrail")
+                if not ok then
+                    return ""
+                end
+                return keytrail.statusline()
+            end
+
+            require("lualine").setup({
                 options = {
-                    component_separators = { left = '', right = '' },
-                    section_separators = { left = '', right = '' },
+                    component_separators = { left = "", right = "" },
+                    section_separators = { left = "", right = "" },
                 },
                 sections = {
-                    lualine_a = { 'mode' },
-                    lualine_b = { 'branch', 'diff', 'diagnostics' },
-                    lualine_c = { 'filename' },
+                    lualine_a = { "mode" },
+                    lualine_b = { "branch", "diff", "diagnostics" },
+                    lualine_c = {
+                        "filename",
+                        keytrail_component,
+                    },
                     lualine_x = {
-                        'encoding',
-                        'fileformat',
-                        'filetype',
+                        "encoding",
+                        "fileformat",
+                        "filetype",
                         {
                             function()
                                 local clients = vim.lsp.get_clients({ bufnr = 0 })
                                 if #clients == 0 then
-                                    return ''
+                                    return ""
                                 end
                                 local names = {}
                                 for _, client in ipairs(clients) do
                                     table.insert(names, client.name)
                                 end
-                                return '' .. table.concat(names, ' ')
+                                return table.concat(names, " ")
                             end,
-                            icon = ' ',
+                            icon = " ",
                         },
                     },
-                    lualine_y = { 'progress' },
-                    lualine_z = { 'location' }
+                    lualine_y = { "progress" },
+                    lualine_z = { "location" },
                 },
             })
-        end
+        end,
     },
     {
         'onsails/lspkind.nvim',
@@ -286,11 +302,12 @@ require("lazy").setup({
         },
     },
     { 'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons' },
-    { 'akinsho/toggleterm.nvim', version = "*", config = true }
+    { 'akinsho/toggleterm.nvim', version = "*", config = true },
+    { 'towolf/vim-helm',         ft = 'helm', }
 
 })
 -- temporary until hopefully added to mason
-local systemd_lsp_path = '/Users/james/repos/systemd-lsp/target/release/systemd-lsp'
+local systemd_lsp_path = '/Users/james.fotherby/repos/systemd-lsp/target/release/systemd-lsp'
 if vim.fn.filereadable(systemd_lsp_path) == 1 then
     vim.api.nvim_create_autocmd("BufEnter", {
         pattern = { "*.service", "*.mount", "*.device", "*.nspawn", "*.target", "*.timer" },

@@ -28,10 +28,6 @@
 --   Shift+Up/Down   → FZF preview scroll
 --   Ctrl+z          → Abort FZF search
 --
--- BUFFER NAVIGATION:
---   Ctrl+.          → Next buffer
---   Ctrl+,          → Previous buffer
---
 -- INSERT MODE ESCAPES:
 --   jk, jj, kk      → Exit insert mode
 --
@@ -123,8 +119,17 @@ vim.keymap.set('n', '<leader>bb', fzf.buffers, { desc = "Buffers" })            
 -- BUFFER NAVIGATION
 -- ============================================================================
 -- Quick buffer switching
-vim.keymap.set('n', '<C-.>', ':bnext<CR>', { desc = "Next buffer" })         -- Next buffer
-vim.keymap.set('n', '<C-,>', ':bprevious<CR>', { desc = "Previous buffer" }) -- Previous buffer
+vim.keymap.set('n', '<Tab>', function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  -- Only switch if this is an actual file buffer
+  if buftype == '' and bufname ~= '' then
+    vim.cmd('bnext')
+  else
+    -- Optionally, do nothing or fallback to default Tab behavior
+  end
+end, { desc = "Next buffer (actual files only)" })
 ---@diagnostic disable-next-line: deprecated
 vim.keymap.set("n", "]g", function() vim.diagnostic.goto_next() end)         -- Next diagnostic
 ---@diagnostic disable-next-line: deprecated
