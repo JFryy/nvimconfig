@@ -182,7 +182,10 @@ require("lazy").setup({
                     lualine_a = { "mode" },
                     lualine_b = { "branch", "diff", "diagnostics" },
                     lualine_c = {
-                        "filename",
+                        {
+                            "filename",
+                            path = 1,
+                        },
                         keytrail_component,
                     },
                     lualine_x = {
@@ -303,7 +306,11 @@ require("lazy").setup({
     },
     { 'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons' },
     { 'akinsho/toggleterm.nvim', version = "*", config = true },
-    { 'towolf/vim-helm',         ft = 'helm', }
+    { 'towolf/vim-helm',         ft = 'helm', },
+    {
+        'notjedi/nvim-rooter.lua',
+        config = function() require 'nvim-rooter'.setup() end
+    }
 
 })
 -- temporary until hopefully added to mason
