@@ -32,9 +32,9 @@ return function()
             'bashls',
             'gopls',
             'lua_ls',
-            'yamlls',
             'helm_ls',
             'gopls',
+            'jedi_language_server'
         },
         handlers = {
             function(server_name)
@@ -47,8 +47,7 @@ return function()
                     settings = {
                         ['helm-ls'] = {
                             yamlls = {
-                                enabled = true,
-                                enabledForFilesGlob = "*.{yaml,yml,tpl}",
+                                enabled = false,
                             },
                         },
                     },

@@ -17,6 +17,16 @@
 --   Ctrl+n          → Toggle Neo-tree file explorer
 --   <leader>ex      → Open native file explorer
 --
+-- TERMINAL:
+--   <leader>t       → Toggle custom floating terminal (fancy & beautiful!)
+--   <leader>tn      → Create new terminal instance
+--   <leader>tl      → List all terminal instances
+--   (in terminal):
+--     <leader>t     → Toggle terminal off
+--     jk            → Exit to normal mode
+--     Esc Esc       → Exit to normal mode
+--     Ctrl+h/j/k/l  → Navigate between windows
+--
 -- FUZZY FINDING (FZF-lua):
 --   <leader>ff      → Find files by name
 --   <leader>fg      → Live grep search in files
@@ -160,36 +170,28 @@ vim.cmd([[cab cc CodeCompanion]])
 vim.api.nvim_set_keymap('n', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<leader>cc', ':CodeCompanion<CR>', { noremap = true, silent = true })
 
-
-
--- ToggleTerm configuration for Neovim
-require('toggleterm').setup {
-    size = 20,
-    open_mapping = [[<c-\>]],
-    hide_numbers = true,
-    shade_filetypes = {},
-    shade_terminals = true,
-    shading_factor = 2,
-    start_in_insert = true,
-    insert_mappings = true,
-    persist_size = true,
-    direction = 'horizontal', -- 'vertical' | 'horizontal' | 'tab' | 'float'
-    close_on_exit = true,
-    shell = vim.o.shell,
-    float_opts = {
-        border = 'curved',
-        winblend = 3,
-        highlights = {
-            border = 'Normal',
-            background = 'Normal',
-        }
-    }
-}
-
--- Optional: Keymap to toggle terminal
+-- ============================================================================
+-- TERMINAL
+-- ============================================================================
+-- Custom fancy terminal toggle with beautiful styling
 vim.keymap.set('n', '<leader>tt', function()
-    require('toggleterm').toggle()
+    require('mymachine.terminal').toggle()
 end, { desc = 'Toggle Terminal' })
+
+-- Additional terminal commands
+vim.keymap.set('n', '<leader>tn', function()
+    require('mymachine.terminal').new_terminal()
+end, { desc = 'New Terminal' })
+
+vim.keymap.set('n', '<leader>tl', function()
+    require('mymachine.terminal').list_terminals()
+end, { desc = 'List Terminals' })
+
+-- ============================================================================
+-- GIT BLAME
+-- ============================================================================
+-- Toggle git blame inline display
+vim.keymap.set('n', '<leader>gb', ':GitBlameToggle<CR>', { noremap = true, silent = true, desc = "Toggle Git Blame" })
 
 -- Bufferline configuration for Neovim
 vim.opt.termguicolors = true

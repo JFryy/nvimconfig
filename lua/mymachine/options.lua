@@ -22,14 +22,12 @@ vim.opt.relativenumber = true
 
 -- UI
 vim.opt.cursorline = true
-vim.opt.signcolumn = 'yes' -- Always show the sign column
+vim.opt.signcolumn = 'yes'             -- Always show the sign column
 vim.opt.wrap = false
-vim.opt.termguicolors = true
 vim.opt.scrolloff = 8                  -- Keep 8 lines visible above/below cursor
 vim.opt.sidescrolloff = 8              -- Keep 8 columns visible left/right of cursor
 vim.opt.splitbelow = true              -- Horizontal splits go below
 vim.opt.splitright = true              -- Vertical splits go to the right
-vim.opt.mouse = 'a'                    -- Enable mouse support
 vim.opt.showcmd = false                -- Don't show keypresses
 vim.cmd('let g:gitblame_delay = 5000') -- Git blame delay
 
@@ -64,6 +62,8 @@ vim.cmd([[
   autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]])
 
+-- vim.opt.shortmess:append('c') -- Don't show completion messages
+vim.o.mouse = ''  -- Disable mouse support in Neovim
 -- Configure diagnostic signs and display
 vim.diagnostic.config({
     virtual_text = false,

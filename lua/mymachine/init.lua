@@ -257,7 +257,7 @@ require("lazy").setup({
             require("copilot").setup({
                 suggestion = {
                     keymap = {
-                        accept = "<C-s>",
+                        accept = "<Tab>",
                     },
                     auto_trigger = true
                 },
@@ -284,35 +284,40 @@ require("lazy").setup({
         dependencies = { { 'nvim-tree/nvim-web-devicons' } }
     },
     {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        priority = 1000,
-        config = function()
-            vim.cmd.colorscheme(
-                "catppuccin")
-        end
-    },
-    {
         "f-person/git-blame.nvim",
         event = "VeryLazy",
         opts = {
-            -- your configuration comes here
-            -- for example
-            enabled = true, -- if you want to enable the plugin
+            enabled = false, -- disabled by default, toggle with <leader>gb
             message_template = " [<summary>] • [<date>] • <author> | <<sha>>", -- template for the blame message, check the Message template section for more options
             date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
             virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
+            delay = 0, -- no hover delay
         },
     },
     { 'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons' },
-    { 'akinsho/toggleterm.nvim', version = "*", config = true },
     { 'towolf/vim-helm',         ft = 'helm', },
     {
-        'notjedi/nvim-rooter.lua',
-        config = function() require 'nvim-rooter'.setup() end
+        "rose-pine/neovim",
+        name = "rose-pine",
+        config = function()
+            vim.cmd("colorscheme rose-pine")
+        end
     }
-
 })
+
+-- ============================================================================
+-- CUSTOM TERMINAL SETUP
+-- ============================================================================
+-- Initialize our fancy custom terminal with beautiful styling
+require('mymachine.terminal').setup({
+    size = {
+        width = 0.85,
+        height = 0.85,
+    },
+    border = "rounded",
+    winblend = 10,
+})
+
 -- temporary until hopefully added to mason
 local systemd_lsp_path = '/Users/james.fotherby/repos/systemd-lsp/target/release/systemd-lsp'
 if vim.fn.filereadable(systemd_lsp_path) == 1 then
