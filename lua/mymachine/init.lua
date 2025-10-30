@@ -257,11 +257,22 @@ require("lazy").setup({
             require("copilot").setup({
                 suggestion = {
                     keymap = {
-                        accept = "<Tab>",
+                        accept = false, -- disable default Tab binding
                     },
                     auto_trigger = true
                 },
             })
+
+            -- Smart Tab: Accept Copilot suggestion if visible, otherwise use default Tab behavior
+            vim.keymap.set('i', '<Tab>', function()
+                local copilot = require('copilot.suggestion')
+                if copilot.is_visible() then
+                    copilot.accept()
+                else
+                    -- Fall back to default Tab (insert tab/spaces for indentation)
+                    return vim.api.nvim_replace_termcodes('<Tab>', true, false, true)
+                end
+            end, { expr = true, silent = true, desc = "Accept Copilot or indent" })
         end,
     },
     {
