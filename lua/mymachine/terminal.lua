@@ -145,7 +145,7 @@ function M.toggle(term_id)
         local opts = { noremap = true, silent = true, buffer = term.bufnr }
 
         -- <leader>t to toggle from terminal mode
-        vim.keymap.set('t', '<leader>t', function()
+        vim.keymap.set('t', '<leader>tt', function()
             M.toggle(term_id)
         end, opts)
 
